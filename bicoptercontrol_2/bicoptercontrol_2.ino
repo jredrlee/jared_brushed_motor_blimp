@@ -227,7 +227,7 @@ void loop() {
     thrust2.writeMicroseconds(1000);
     //delay(5);
   }
-
+  send_udp_feedback();
 }
 
 void getSensorValues(){ //all in radians or meters or meters per second
@@ -354,4 +354,14 @@ void unpack_joystick(float *dat, const unsigned char *buffer) {
     //   dat[i] = *((float*) temp);
     // }
   }
+}
+
+// send udp feedback on roll, pitch, and yaw
+void send_udp_feedback(){
+  String blimp_feedback = String("");
+  //String send_roll = String((float)roll); 
+  //send_pitch = String((float)pitch); 
+  //send_yaw = String((float)yaw); 
+  blimp_feedback = String((float)roll) + String(", ") + String((float)pitch) + String(", ") + String((float)yaw);
+  udp.broadcastTo(blimp_feedback.c_str(), 1333);
 }
